@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>media helper</title>
+    <style>
+        .warp {
+            width: 300px;
+        }
+
+        .warp ul {
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        .warp li {
+            padding: 1em 0.5em;
+            position: relative;
+        }
+
+        .warp .title {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .speed {
+            position: absolute;
+            left: 0;
+            width: 50%;
+            background-color: #009688;
+            height: 2px;
+            transition: width .6s;
+        }
+    </style>
+</head>
+<body>
+<div class="warp">
+    <h2>下载列表【media helper】</h2>
+    <ul>
+        <li>
+            <div class="title">aaaaacs.mp4</div>
+            <div class="speed"></div>
+        </li>
+        <li>22222223123.mp3</li>
+        <li>22222223123.mp3</li>
+    </ul>
+</div>
+<script type="text/javascript" charset="utf-8" src="popuo.js"></script>
+</body>
+</html>

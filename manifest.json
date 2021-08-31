@@ -1,0 +1,25 @@
+{
+  "name": "媒体助手",
+  "description": "音视频下载助手",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["storage","scripting","contextMenus"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "logo.png",
+      "32": "logo.png",
+      "48": "logo.png",
+      "128": "logo.png"
+    }
+  },
+  "icons": {
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "background": {
+    "service_worker": "bg.js"
+  }
+}
