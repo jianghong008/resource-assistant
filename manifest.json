@@ -3,7 +3,12 @@
   "description": "音视频下载助手",
   "version": "1.0",
   "manifest_version": 3,
-  "permissions": ["storage","scripting","contextMenus"],
+  "permissions": [
+    "storage",
+    "scripting",
+    "contextMenus",
+    "tabs"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -13,6 +18,17 @@
       "128": "logo.png"
     }
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "cont.js"
+      ]
+    }
+  ],
   "icons": {
     "16": "logo.png",
     "32": "logo.png",

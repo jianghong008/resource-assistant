@@ -5,6 +5,8 @@ chrome.runtime.onInstalled.addListener(() => {
         title:'media helper设置',
         id:'media-helper-1',
     },()=>{
-        console.log(1)
+        chrome.windows.getCurrent((w)=>{
+            console.log(w)
+        })
     })
 });
