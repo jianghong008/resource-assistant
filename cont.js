@@ -158,7 +158,7 @@ window.onkeypress = (e) => {
 //初始化
 !function () {
     sendMessage('加载完成','init');
-    console.log('欢迎使用%c【媒体助手】！','color: #e91e63;font-weight: bold;')
+    console.log('欢迎使用%c【media助手】！%cjhjhjhjh','color: #e91e63;font-weight: bold;','color:green;')
 }()
 
 /**
