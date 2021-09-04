@@ -76,7 +76,7 @@ function cache_set(key,val){
 //请求拦截
 chrome.webRequest.onResponseStarted.addListener(
     function (details) {
-        let temp = details.url.match(/\.(mp3|mp4|wav|ogg|m4a|aac|mpeg)/);
+        let temp = details.url.match(/\.(mp3|mp4|wav|ogg|m4a|aac|mpeg|m3u8)/);
         if (details.type == data.resource || temp) {
             sendMessageToActive({
                 type: data.resource,
@@ -94,6 +94,9 @@ chrome.webRequest.onResponseStarted.addListener(
  */
 function sendMessageToActive(msg = {}, cmd = 'msg') {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        if(!tabs[0]){
+            return
+        }
         chrome.tabs.sendMessage(tabs[0].id, {
             data:msg, cmd
         })

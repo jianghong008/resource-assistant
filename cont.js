@@ -12,7 +12,8 @@ const config = {
     choose: 0,
     last_el_path: [],
     list: [],
-    version: '1.0'
+    version: '1.0',
+    active_el_border:'border: dashed 1px #e91e63',
 }
 
 /**
@@ -48,6 +49,9 @@ chrome.runtime.onMessage.addListener((m) => {
             if(!title){
                 title = $('title').text();
             }
+            //过滤特殊字符，并限制12个字符
+            title = title.replace(/[\.\:\s\<\>\\\[\]\^\`\`\'\"\;\*\$\@\~]/ig,'').substr(0,12);
+            //获取文件后缀
             let temp = data.url.match(/\.[\w]{1,6}\?/);
             temp = temp && temp[0] ? temp[0] : '.mp3';
             let f_type = temp.replace('?', '');
@@ -153,7 +157,8 @@ window.onkeypress = (e) => {
 
 //初始化
 !function () {
-    sendMessage('加载完成')
+    sendMessage('加载完成','init');
+    console.log('欢迎使用%c【媒体助手】！','color: #e91e63;font-weight: bold;')
 }()
 
 /**

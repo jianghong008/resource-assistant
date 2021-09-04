@@ -75,6 +75,17 @@ function downloads_start(index) {
     })
 }
 
+
+function open_tabs(url='') {
+    if(!url){
+        return
+    }
+    chrome.tabs.create({
+        url:url,
+
+    })
+}
+
 /**
  * 给当前激活窗口发送信息
  * @param {object} msg
