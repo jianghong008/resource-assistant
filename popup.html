@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>media helper</title>
     <style>
@@ -25,30 +26,53 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+            width: calc(100% - 4em);
+        }
+
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .speed {
             position: absolute;
             left: 0;
             width: 50%;
-            background-color: #009688;
+            background-color: #2196f3;
             height: 2px;
             transition: width .6s;
         }
+
+        .btn {
+            width: 4em;
+            background: #777777;
+            color: #fff;
+            text-align: center;
+            padding: 0.4em 0;
+            border-radius: 0.4em;
+            cursor: pointer;
+        }
+
+        .btn-yes {
+            background: #009688;
+        }
+
+        .btn-no {
+            background: #e91e63;
+        }
     </style>
 </head>
+
 <body>
-<div class="warp">
-    <h2>下载列表【media helper】</h2>
-    <ul>
-        <li>
-            <div class="title">aaaaacs.mp4</div>
-            <div class="speed"></div>
-        </li>
-        <li>22222223123.mp3</li>
-        <li class="btn">22222223123.mp3</li>
-    </ul>
-</div>
-<script type="text/javascript" charset="utf-8" src="popuo.js"></script>
+    <div class="warp">
+        <h2>下载列表【media helper】</h2>
+        <ul id="file-list">
+            <!-- 文件列表 -->
+        </ul>
+    </div>
+    <script type="text/javascript" charset="utf-8" src="lib/jq3.js"></script>
+    <script type="text/javascript" charset="utf-8" src="popuo.js"></script>
 </body>
+
 </html>

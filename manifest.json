@@ -1,13 +1,18 @@
 {
   "name": "媒体助手",
-  "description": "音视频下载助手",
+  "description": "音视频下载助手，按Q键进入元素选择模式，鼠标选中后再次Q键取消模式！",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": [
     "storage",
     "scripting",
     "contextMenus",
+    "downloads",
+    "webRequest",
     "tabs"
+  ],
+  "host_permissions": [
+    "*://*/*"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -21,11 +26,14 @@
   "content_scripts": [
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "*://*/*"
       ],
       "js": [
+        "lib/jq3.js",
         "cont.js"
+      ],
+      "css": [
+        "cont.css"
       ]
     }
   ],
