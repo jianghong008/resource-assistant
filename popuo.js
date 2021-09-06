@@ -66,6 +66,9 @@ function load_list() {
  * @param {number} index 
  */
 function downloads_start(index) {
+    if(!config.list[index]){
+        return
+    }
     chrome.downloads.download({
         url:config.list[index].url,
         filename:config.list[index].title

@@ -58,6 +58,9 @@ chrome.runtime.onMessage.addListener((m, s) => {
  * @param {object} val 
  */
 function cache_set(key,val){
+    if(!val){
+        return
+    }
     const obj = {};
     obj[key] = val
     chrome.storage.local.set(obj);

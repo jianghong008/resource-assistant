@@ -22,6 +22,9 @@ const config = {
  * @param {object} val 
  */
 function cache_set(key, val) {
+    if(!val){
+        return
+    }
     const obj = {};
     obj[key] = val
     chrome.storage.local.set(obj);
@@ -49,8 +52,8 @@ chrome.runtime.onMessage.addListener((m) => {
             if(!title){
                 title = $('title').text();
             }
-            //过滤特殊字符，并限制12个字符
-            title = title.replace(/[\.\:\s\<\>\\\[\]\^\`\`\'\"\;\*\$\@\~]/ig,'').substr(0,12);
+            //过滤特殊字符，并限制18个字符
+            title = title.replace(/[\.\:\s\<\>\\\[\]\^\`\`\'\"\;\*\$\@\~]/ig,'').substr(0,18);
             //获取文件后缀
             let temp = data.url.match(/\.[\w]{1,6}\?/);
             temp = temp && temp[0] ? temp[0] : '.mp3';
