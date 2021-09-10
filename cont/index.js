@@ -3,18 +3,33 @@
  * v1
  * jh
  */
-
+const sys_conf = 'sys_conf';
 const config = {
     choose_el: 'media-helper-choose',
     el_selector: 'title',
     auto_download: 0,
-    resource: 'media',
     choose: 0,
     last_el_path: [],
     list: [],
     version: '1.0',
     active_el_border:'border: dashed 1px #e91e63',
-}
+    path:"\.(mp3|mp4|wav|ogg|m4a|aac|mpeg|m3u8)",
+    file_type:'media'
+};
+
+/**
+ * 加载配置
+ */
+cache_get(sys_conf,(res)=>{
+    if(res['sys_conf']){
+        for (let k in res['sys_conf']){
+            if(typeof res['sys_conf'][k] === 'string'){
+                config[k] = res['sys_conf'][k];
+            }
+
+        }
+    }
+});
 
 /**
  * 设置缓存数据
@@ -47,19 +62,7 @@ chrome.runtime.onMessage.addListener((m) => {
             break;
         case 'resource':
             //转发资源到列表
-            const data = { ...m.data };
-            let title = $(config.el_selector).text();
-            if(!title){
-                title = $('title').text();
-            }
-            //过滤特殊字符，并限制18个字符
-            title = title.replace(/[\.\:\s\<\>\\\[\]\^\`\`\'\"\;\*\$\@\~]/ig,'').substr(0,18);
-            //获取文件后缀
-            let temp = data.url.match(/\.[\w]{1,6}\?/);
-            temp = temp && temp[0] ? temp[0] : '.mp3';
-            let f_type = temp.replace('?', '');
-            data['title'] = title + f_type;
-            set_list(data)
+            set_list(m.data);
             break;
         case 'get_list':
             //发生列表到弹出
@@ -69,38 +72,71 @@ chrome.runtime.onMessage.addListener((m) => {
             console.log(m.data, m.cmd)
             break;
     }
-})
+});
 
 //添加资源列表
 function set_list(obj) {
-    const o = { ...obj }
-    if (!o.url) {
+    const data = { ...obj };
+    let title = $(config.el_selector).text();
+    if(!title){
+        title = $('title').text();
+    }
+    //过滤特殊字符，并限制18个字符
+    title = title.replace(/[\.\:\s\<\>\\\[\]\^\`\`\'\"\;\*\$\@\~]/ig,'').substr(0,18);
+    //获取文件后缀
+    let temp = data.url.match(/\.[\w]{1,6}\?/);
+    temp = temp && temp[0] ? temp[0] : '';
+    if(temp===''){
+        switch (config.file_type) {
+            case "media":
+                temp = '.mp3';
+                break;
+            case "stylesheet":
+                temp = '.css';
+                break;
+            case "script":
+                temp = '.js';
+                break;
+            case "image":
+                temp = '.png';
+                break;
+            case "xmlhttprequest":
+                temp = '.temp';
+                break;
+            case "other":
+                temp = '.temp';
+                break;
+            case "websocket":
+                temp = '.temp';
+                break;
+        }
+    }
+
+    let f_type = temp.replace('?', '');
+    data['title'] = title + f_type;
+
+    if (!data.url) {
         return
     }
-    if (!o.title) {
-        o.title = '未知资源'
+    if (!data.title) {
+        data.title = '未知资源'
     }
+    data.state = 0;
+    data.speed = 0;
     //去重处理
     for (let i = 0; i < config.list.length; i++) {
-        if (config.list[i].url === o.url) {
+        if (config.list[i].url === data.url) {
+            config.list[i] = data;
             return;
         }
     }
-    o.state = 0;
-    o.speed = 0;
-    config.list.push(o);
+    
+    config.list.push(data);
 }
-
-//获取默认标题
-cache_get('el_selector', (res) => {
-    if (res['el_selector']) {
-        config.el_selector = res.el_selector;
-    }
-})
 
 //选择元素路径
 window.onmousemove = (e) => {
-    if (config.choose == 0) {
+    if (config.choose === 0) {
         return;
     }
     if (e.path.length > 4) {
@@ -112,10 +148,10 @@ window.onmousemove = (e) => {
 
 //按下空格进入元素选择
 window.onkeypress = (e) => {
-    if (e.keyCode != 113) {
+    if (e.keyCode !== 113) {
         return
     }
-    if (config.choose == 0) {
+    if (config.choose === 0) {
         config.choose = 1;
         return;
     }
@@ -155,14 +191,18 @@ window.onkeypress = (e) => {
     }
     selector = selector.replace(config.choose_el, '');
     config.el_selector = selector;
-    cache_set('el_selector', selector)
-}
+
+    const conf = {...config};
+    delete conf['last_el_path'];
+    delete conf['list'];
+    sendMessage(conf,'conf');
+};
 
 //初始化
 !function () {
     sendMessage('加载完成','init');
     console.log('欢迎使用%c【media助手】！%cjhjhjhjh','color: #e91e63;font-weight: bold;','color:green;')
-}()
+}();
 
 /**
  * 向后台发送数据指令

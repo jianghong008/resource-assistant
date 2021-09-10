@@ -3,6 +3,7 @@
   "description": "音视频下载助手，按Q键进入元素选择模式，鼠标选中后再次Q键取消模式！",
   "version": "1.0",
   "manifest_version": 3,
+  "homepage_url": "http://cmh.jhhaha.com",
   "permissions": [
     "storage",
     "scripting",
@@ -11,11 +12,12 @@
     "webRequest",
     "tabs"
   ],
+  "options_page": "options/index.html",
   "host_permissions": [
     "*://*/*"
   ],
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "popup/index.html",
     "default_icon": {
       "16": "logo.png",
       "32": "logo.png",
@@ -30,10 +32,10 @@
       ],
       "js": [
         "lib/jq3.js",
-        "cont.js"
+        "cont/index.js"
       ],
       "css": [
-        "cont.css"
+        "cont/index.css"
       ]
     }
   ],

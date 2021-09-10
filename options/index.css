@@ -1,0 +1,48 @@
+body {
+    background-color: #eee;
+    font-family: arial,sans-serif;
+    font-size: 13px;
+}
+.media-options{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 40px auto 20px;
+    padding: 32px;
+    width: 650px;
+}
+.media-options-title{
+    text-align: center;
+}
+.option_row {
+    display: table-row;
+}
+.option_name {
+    display: table-cell;
+    font-weight: bold;
+    margin-top: 3px;
+    padding-right: 16px;
+    padding-top: 16px;
+    white-space: nowrap;
+}
+.option_row button{
+    margin: 1em;
+}
+.option_picker {
+    display: table-cell;
+}
+.option_picker select{
+    padding: 0.5em;
+}
+.popup-option-content{
+    white-space: pre-line;
+}
+.popup-option-content textarea{
+    padding: 1em;
+    width: 495px;
+    resize: vertical;
+}
+.msg{
+    color: #f44336;
+    font-weight: bold;
+}

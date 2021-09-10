@@ -1,0 +1,65 @@
+.warp {
+    width: 300px;
+}
+
+.warp h2 {
+    text-align: center;
+    border-bottom: solid 1px #d1d1d1;
+    padding-bottom: 1em;
+}
+
+.warp ul {
+    height: 400px;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.warp li {
+    padding: 1em 0.5em;
+    position: relative;
+    list-style: none;
+}
+
+.warp li:hover{
+    background: #f1f1f1;
+}
+
+.warp .title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: calc(100% - 4em);
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.speed {
+    position: absolute;
+    left: 0;
+    width: 50%;
+    background-color: #2196f3;
+    height: 2px;
+    transition: width .6s;
+}
+
+.btn {
+    width: 4em;
+    background: #777777;
+    color: #fff;
+    text-align: center;
+    padding: 0.4em 0;
+    border-radius: 0.4em;
+    cursor: pointer;
+}
+
+.btn-yes {
+    background: #009688;
+}
+
+.btn-no {
+    background: #e91e63;
+}

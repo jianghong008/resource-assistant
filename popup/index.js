@@ -11,7 +11,7 @@ const config = {
     choose: 0,
     version: '1.0',
     list: [],
-}
+};
 
 //数据监听
 chrome.runtime.onMessage.addListener((m) => {
@@ -92,6 +92,7 @@ function open_tabs(url='') {
 /**
  * 给当前激活窗口发送信息
  * @param {object} msg
+ * @param cmd
  */
  function sendMessageToActive(msg = {}, cmd = 'msg') {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {

@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>设置</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-$END$
+    <div class="media-options">
+        <h2 class="media-options-title">media helper 设置</h2>
+        <div class="option_row">
+            <div class="option_name">捕获资源类型</div>
+            <div class="option_picker">
+                <select id="file_type">
+                    <option value="all">全部资源</option>
+                    <option value="stylesheet">CSS样式表</option>
+                    <option value="script">JS脚本</option>
+                    <option value="image">图片</option>
+                    <option value="font">字体文件</option>
+                    <option value="xmlhttprequest">xhr网络请求</option>
+                    <option value="media">音频/视频</option>
+                    <option value="websocket">websocket</option>
+                    <option value="other">其它</option>
+                </select>
+            </div>
+        </div>
+        <div class="option_row">
+            <div class="option_name">资源标题</div>
+            <div class="popup-option-content">
+                <textarea id="el_selector" cols="30" rows="10" placeholder="默认捕获资源的标题来源，此处应为css选择器，推荐使用Q键进行元素选择"></textarea>
+            </div>
+        </div>
+        <div class="option_row">
+            <div class="option_name">路径匹配</div>
+            <div class="popup-option-content">
+                <textarea id="path" cols="30" rows="10" placeholder="用于匹配资源URL，仅支持正则">.(mp3|mp4|wav|ogg|m4a|aac|mpeg|m3u8)</textarea>
+            </div>
+        </div>
+        <div class="option_row">
+            <span class="msg"></span>
+        </div>
+        <div id="save-btn" class="option_row">
+            <button>保 存</button>
+        </div>
+    </div>
+    <script type="text/javascript" charset="utf-8" src="../lib/jq3.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
