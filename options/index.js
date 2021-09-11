@@ -47,7 +47,7 @@ $('#save-btn').on('click',()=>{
     conf.el_selector = $('#el_selector').val();
     conf.path = $('#path').val();
     sendMessage(conf,'conf')
-    $('.msg').text('保存成功');
+    $('.msg').text(chrome.i18n.getMessage("option_save_msg"));
 
 });
 
@@ -66,3 +66,25 @@ cache_get(sys_conf,(res)=>{
         }
     }
 });
+
+/**
+ * 初始化UI
+ */
+!function() {
+    $('.media-options-title').text(chrome.i18n.getMessage("options_title"));
+
+    for (let i = 1; i <= 3; i++) {
+        $('.option_name_'+i).text(chrome.i18n.getMessage("option_name_"+i));
+    }
+
+    for (let i = 1; i <= 9; i++) {
+        $('#file_type option:nth-child('+i+')').text(chrome.i18n.getMessage("file_type_"+i));
+    }
+
+    $('#save-btn button').text(chrome.i18n.getMessage("option_save"));
+
+    $('#el_selector').attr('placeholder',chrome.i18n.getMessage("el_selector"));
+
+    $('#path').attr('placeholder',chrome.i18n.getMessage("option_path"));
+
+}()

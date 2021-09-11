@@ -104,5 +104,8 @@ function open_tabs(url='') {
 
 //初始化
 !function () {
-    sendMessageToActive('获取列表','get_list');
+    let popup_title = chrome.i18n.getMessage("popup_title");
+    $('#popup_title').text(popup_title);
+
+    sendMessageToActive(null,'get_list');
 }()

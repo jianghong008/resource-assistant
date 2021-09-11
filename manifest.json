@@ -1,6 +1,6 @@
 {
-  "name": "media助手",
-  "description": "音视频下载助手，按Q键进入元素选择模式，鼠标选中后再次Q键取消模式！",
+  "name": "__MSG_app_name__",
+  "description": "__MSG_description__",
   "version": "1.0",
   "manifest_version": 3,
   "homepage_url": "http://cmh.jhhaha.com",
@@ -12,6 +12,7 @@
     "webRequest",
     "tabs"
   ],
+  "default_locale":"en",
   "options_page": "options/index.html",
   "host_permissions": [
     "*://*/*"

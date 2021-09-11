@@ -11,7 +11,7 @@ const data = {
     auto_download:0,
     path:"\.(mp3|mp4|wav|ogg|m4a|aac|mpeg|m3u8)",
     el_selector:'',
-    file_type:'media',
+    file_type:'',
     choose:0,
     version:'1.0'
 };
@@ -58,6 +58,9 @@ chrome.runtime.onMessage.addListener((m, s) => {
         case "conf":
             cache_set(sys_conf,m.data)
             break
+        case "keep":
+            console.log('保持连接')
+            break
     }
 });
 
@@ -84,15 +87,19 @@ function cache_get(key, callback) {
     chrome.storage.local.get([key], callback);
 }
 
-//请求拦截
+/**
+ * 请求拦截-捕获资源(此方法有个小问题，已经缓存的资源无法捕获，需要强制刷新浏览器)
+ */
 chrome.webRequest.onResponseStarted.addListener(
     function (details) {
         let reg = new RegExp(data.path,'ig');
-        let temp = details.url.match(reg);
-        if (details.type === data.file_type || !data.file_type) {
+        if (details.type === data.file_type || !data.file_type || data.file_type === 'all') {
+            let temp = details.url.match(reg);
+            
             if(!temp && data.path){
                 return { cancel: false };
             }
+            
             sendMessageToActive({
                 type: data.file_type?data.file_type:'all',
                 requestId: details.requestId,

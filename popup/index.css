@@ -20,6 +20,12 @@
     list-style: none;
 }
 
+#file-list::-webkit-scrollbar{
+    width: 4px;
+    background-color: #d1d1d1fa;
+    border-radius: 4px;
+}
+
 .warp li:hover{
     background: #f1f1f1;
 }

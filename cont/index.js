@@ -119,7 +119,7 @@ function set_list(obj) {
         return
     }
     if (!data.title) {
-        data.title = '未知资源'
+        data.title = chrome.i18n.getMessage("file_type_none")
     }
     data.state = 0;
     data.speed = 0;
@@ -142,23 +142,25 @@ window.onmousemove = (e) => {
     if (e.path.length > 4) {
         $('.media-helper-choose').removeClass(config.choose_el);
         $(e.path[0]).addClass(config.choose_el);
+        
         config.last_el_path = e.path;
     }
 }
 
-//按下空格进入元素选择
-window.onkeypress = (e) => {
-    if (e.keyCode !== 113) {
+//按下Q键进入元素选择
+window.document.onkeyup = (e) => {
+
+    if (e.keyCode !== 81 && typeof e.keyCode !== 'undefined') {
         return
     }
-    if (config.choose === 0) {
+    
+    if (config.choose == 0) {
         config.choose = 1;
         return;
     }
     $('.media-helper-choose').removeClass(config.choose_el);
     let ar = config.last_el_path;
     if (ar.length <= 4) {
-        console.log('请重新选择媒体标题')
         return
     }
     let selector = '';
@@ -200,9 +202,15 @@ window.onkeypress = (e) => {
 
 //初始化
 !function () {
-    sendMessage('加载完成','init');
-    console.log('欢迎使用%c【media助手】！%cjhjhjhjh','color: #e91e63;font-weight: bold;','color:green;')
+    sendMessage(null,'init');
+    console.log(chrome.i18n.getMessage("welcome")+'%c【'+chrome.i18n.getMessage("app_name")+'】！%cjianghong','color: #e91e63;font-weight: bold;','color:green;')
 }();
+
+/**
+ * 与后台保持联系
+ */
+
+ const check_timer = setInterval(sendMessage,5000,null,'keep');
 
 /**
  * 向后台发送数据指令
@@ -210,9 +218,15 @@ window.onkeypress = (e) => {
  * @param {string} cmd 
  */
 function sendMessage(data = {}, cmd = 'msg') {
-    chrome.runtime.sendMessage({
-        data,
-        cmd
-    })
+    try {
+        chrome.runtime.sendMessage({
+            data,
+            cmd
+        })
+    } catch (error) {
+        console.log(error)
+        clearInterval(check_timer);
+    }
 }
+
 

@@ -1,0 +1,68 @@
+{
+    "app_name":{
+        "message":"media helper"
+    },
+    "description":{
+        "message":"Convenient resource capture tool, press the Q key to enter the element selection mode, after the mouse is selected, press the Q key again to cancel the mode, details please go to the Settings page to view."
+    },
+    "popup_title":{
+        "message":"resources"
+    },
+    "options_title":{
+        "message":"media helper 【settings】"
+    },
+    "option_name_1":{
+        "message":"resource type"
+    },
+    "option_name_2":{
+        "message":"resource title"
+    },
+    "option_name_3":{
+        "message":"path matching"
+    },
+    "el_selector":{
+        "message":"The title source of the resource is captured by default, which is a CSS selector, and the Q key is recommended for element selection"
+    },
+    "option_path":{
+        "message":"Matches resource urls. Only regular is supported"
+    },
+    "file_type_1":{
+        "message":"All resources"
+    },
+    "file_type_2":{
+        "message":"stylesheet"
+    },
+    "file_type_3":{
+        "message":"javsscript"
+    },
+    "file_type_4":{
+        "message":"image"
+    },
+    "file_type_5":{
+        "message":"font file"
+    },
+    "file_type_6":{
+        "message":"xhr"
+    },
+    "file_type_7":{
+        "message":"Audio/Video"
+    },
+    "file_type_8":{
+        "message":"websocket"
+    },
+    "file_type_9":{
+        "message":"other"
+    },
+    "option_save":{
+        "message":"save"
+    },
+    "option_save_msg":{
+        "message":"Save success"
+    },
+    "file_type_none":{
+        "message":"Unknown resources"
+    },
+    "welcome":{
+        "message":"Welcome to use"
+    }
+}
