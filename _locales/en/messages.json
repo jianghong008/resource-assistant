@@ -3,7 +3,7 @@
         "message":"media helper"
     },
     "description":{
-        "message":"Convenient resource capture tool, press the Q key to enter the element selection mode, after the mouse is selected, press the Q key again to cancel the mode, details please go to the Settings page to view."
+        "message":"Convenient resource capture tool, press the Ins key to enter the element selection mode, after the mouse is selected, press the Ins key again to cancel the mode, details please go to the Settings page to view."
     },
     "popup_title":{
         "message":"resources"
@@ -21,7 +21,7 @@
         "message":"path matching"
     },
     "el_selector":{
-        "message":"The title source of the resource is captured by default, which is a CSS selector, and the Q key is recommended for element selection"
+        "message":"The title source of the resource is captured by default, which is a CSS selector, and the Ins key is recommended for element selection"
     },
     "option_path":{
         "message":"Matches resource urls. Only regular is supported"

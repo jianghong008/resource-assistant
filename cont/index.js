@@ -147,10 +147,10 @@ window.onmousemove = (e) => {
     }
 }
 
-//按下Q键进入元素选择
+//按下 Ins 键进入元素选择
 window.document.onkeyup = (e) => {
 
-    if (e.keyCode !== 81 && typeof e.keyCode !== 'undefined') {
+    if (e.keyCode !== 45 && typeof e.keyCode !== 'undefined') {
         return
     }
     
@@ -165,7 +165,9 @@ window.document.onkeyup = (e) => {
     }
     let selector = '';
     for (let i = ar.length - 4; i >= 0; i--) {
-        ;
+        if(!ar[i]){
+            break
+        }
         let id = ar[i].id;
         let cn = ar[i].className.replace(config.choose_el, '');
         let name = ar[i].localName;
@@ -200,24 +202,12 @@ window.document.onkeyup = (e) => {
     sendMessage(conf,'conf');
 };
 
-//初始化
-!function () {
-    sendMessage(null,'init');
-    console.log(chrome.i18n.getMessage("welcome")+'%c【'+chrome.i18n.getMessage("app_name")+'】！%cjianghong','color: #e91e63;font-weight: bold;','color:green;')
-}();
-
-/**
- * 与后台保持联系
- */
-
- const check_timer = setInterval(sendMessage,5000,null,'keep');
-
 /**
  * 向后台发送数据指令
  * @param {object} data 
  * @param {string} cmd 
  */
-function sendMessage(data = {}, cmd = 'msg') {
+ function sendMessage(data = {}, cmd = 'msg') {
     try {
         chrome.runtime.sendMessage({
             data,
@@ -225,8 +215,23 @@ function sendMessage(data = {}, cmd = 'msg') {
         })
     } catch (error) {
         console.log(error)
-        clearInterval(check_timer);
     }
 }
+
+/**
+ * 当窗口被激活时重新连接后台
+ */
+window.document.addEventListener('visibilitychange',()=>{
+    if(window.document.hidden){
+        sendMessage(null,'keep')
+    }
+})
+
+//初始化
+!function () {
+    sendMessage(null,'init');
+    console.log(chrome.i18n.getMessage("welcome")+'%c【'+chrome.i18n.getMessage("app_name")+'】！%cjianghong','color: #e91e63;font-weight: bold;','color:green;')
+}();
+
 
 
