@@ -46,7 +46,9 @@ function load_list() {
         s += `
         <li>
             <div class="info">
-                <div class="title">${config.list[i].title}</div>
+                <i>${config.list[i].s_name}</i>
+                <div class="title">${(i+1)+'、'+config.list[i].title}</div>
+                <span class="btn btn-def" data-index="${i}" style="display:${config.list[i].media_type=='other' ? 'none' : 'inline'}">查看</span>
                 <span class="btn ${config.list[i].state ? 'btn-no' : 'btn-yes'}" data-index="${i}">${config.list[i].state ? '取消' : '下载'}</span>
             </div>
             <div class="speed" style="width:${config.list[i].speed}%;"></div>
@@ -54,11 +56,50 @@ function load_list() {
         `
     }
     list_box.html(s);
-    //事件
-    $('#file-list>li').click((e)=>{
+    
+    //播放事件
+    $('#file-list>li span:nth-of-type(1)').click((e)=>{
+        let index = $(e.target).data('index')
+        media_play(index)
+    });
+    //下载事件
+    $('#file-list>li span:nth-of-type(2)').click((e)=>{
         let index = $(e.target).data('index')
         downloads_start(index)
     });
+}
+
+/**
+ * 播放媒体
+ * @param {number} index 
+ * @returns 
+ */
+function media_play(index){
+    if(!config.list[index]){
+        return
+    }
+    $('.preview').css('display','block')
+    // open_tabs(config.list[index].url)
+    if(config.list[index].media_type=='audio'){
+        $('#audio-play').attr('src',config.list[index].url)
+        $('#audio-play').css('display','inline-block')
+
+        $('#audio-play').siblings().attr('src','')
+        $('#audio-play').siblings().css('display','none')
+    }else if(config.list[index].media_type=='video'){
+        $('#video-play').attr('src',config.list[index].url)
+        $('#video-play').css('display','inline-block')
+
+        $('#video-play').siblings().attr('src','')
+        $('#video-play').siblings().css('display','none')
+    }else if(config.list[index].media_type=='image'){
+        $('#image-play').attr('src',config.list[index].url)
+        $('#image-play').css('display','inline-block')
+
+        $('#image-play').siblings().attr('src','')
+        $('#image-play').siblings().css('display','none')
+    }
+    
 }
 
 /**
@@ -71,14 +112,18 @@ function downloads_start(index) {
     }
     chrome.downloads.download({
         url:config.list[index].url,
-        filename:config.list[index].title
+        filename:(index+1)+'、'+config.list[index].title
     },()=>{
         config.list[index].state = 2;
         config.list[index].speed = 100;
     })
 }
 
-
+/**
+ * 打开新窗口
+ * @param {string} url 
+ * @returns 
+ */
 function open_tabs(url='') {
     if(!url){
         return

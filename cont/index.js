@@ -84,12 +84,16 @@ function set_list(obj) {
     //过滤特殊字符，并限制18个字符
     title = title.replace(/[\.\:\s\<\>\\\[\]\^\`\`\'\"\;\*\$\@\~]/ig,'').substr(0,18);
     //获取文件后缀
-    let temp = data.url.match(/\.[\w]{1,6}\?/);
+    let temp = data.url.match(/\.[\w]{1,6}\??$/);
+    if(!temp){
+        temp = data.url.match(/\.[\w]{1,6}\?/)
+    }
     temp = temp && temp[0] ? temp[0] : '';
+    
     if(temp===''){
-        switch (config.file_type) {
+        switch (data.data.type) {
             case "media":
-                temp = '.mp3';
+                temp = '.mp4';
                 break;
             case "stylesheet":
                 temp = '.css';
@@ -114,13 +118,28 @@ function set_list(obj) {
 
     let f_type = temp.replace('?', '');
     data['title'] = title + f_type;
-
+    data['s_name'] = f_type.replace('.','');
     if (!data.url) {
         return
     }
     if (!data.title) {
         data.title = chrome.i18n.getMessage("file_type_none")
     }
+    //媒体分类
+    if(/(mp3|m4a|ogg|wav)/.test(f_type)){
+        //音频
+        data['media_type'] = 'audio'
+    }else if(/(mp4|flv|avi|ts)/.test(f_type)){
+        //视频
+        data['media_type'] = 'video'
+    }else if(/(png|jpg|gif|ico|jpeg)/.test(f_type)){
+        //图片
+        data['media_type'] = 'image'
+    }else{
+        //其它
+        data['media_type'] = 'other'
+    }
+    
     data.state = 0;
     data.speed = 0;
     //去重处理
@@ -150,7 +169,7 @@ window.onmousemove = (e) => {
 //按下 Ins 键进入元素选择
 window.document.onkeyup = (e) => {
 
-    if (e.keyCode !== 45 && typeof e.keyCode !== 'undefined') {
+    if (e.keyCode !== 45) {
         return
     }
     

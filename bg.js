@@ -96,14 +96,15 @@ chrome.webRequest.onResponseStarted.addListener(
         if (details.type === data.file_type || !data.file_type || data.file_type === 'all') {
             let temp = details.url.match(reg);
             
-            if(!temp && data.path){
+            if(!temp && !data.path){
                 return { cancel: false };
             }
             
             sendMessageToActive({
                 type: data.file_type?data.file_type:'all',
                 requestId: details.requestId,
-                url: details.url
+                url: details.url,
+                data:details
             },'resource')
         }
         return { cancel: false };
