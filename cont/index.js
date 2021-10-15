@@ -132,7 +132,7 @@ function set_list(obj) {
     }else if(/(mp4|flv|avi|ts)/.test(f_type)){
         //视频
         data['media_type'] = 'video'
-    }else if(/(png|jpg|gif|ico|jpeg)/.test(f_type)){
+    }else if(/(png|jpg|gif|ico|jpeg|svg)/.test(f_type)){
         //图片
         data['media_type'] = 'image'
     }else{
