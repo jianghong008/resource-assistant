@@ -64,5 +64,14 @@
     },
     "welcome":{
         "message":"欢迎使用"
+    },
+    "select_type":{
+        "message":"类型："
+    },
+    "select_type_btn":{
+        "message":"批量下载"
+    },
+    "save_all_message":{
+        "message":"请不要勾选 chrome `设置》下载内容》下载前询问每个文件的保存位置`，避免出现多个弹窗！"
     }
 }

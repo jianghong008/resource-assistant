@@ -64,5 +64,14 @@
     },
     "welcome":{
         "message":"Welcome to use"
+    },
+    "select_type":{
+        "message":"type："
+    },
+    "select_type_btn":{
+        "message":"batch download"
+    },
+    "save_all_message":{
+        "message":"Please do not check chrome 'settings download content and ask for the save location of each file before downloading' to avoid multiple pop-up windows!"
     }
 }
