@@ -1,24 +1,24 @@
 {
     "app_name":{
-        "message":"media helper"
+        "message":"Media Helper"
     },
     "description":{
         "message":"Convenient resource capture tool, press the Ins key to enter the element selection mode, after the mouse is selected, press the Ins key again to cancel the mode, details please go to the Settings page to view."
     },
     "popup_title":{
-        "message":"resources"
+        "message":"Resources"
     },
     "options_title":{
-        "message":"media helper 【settings】"
+        "message":"Media Helper 【settings】"
     },
     "option_name_1":{
-        "message":"resource type"
+        "message":"Resource Type"
     },
     "option_name_2":{
-        "message":"resource title"
+        "message":"Resource Title"
     },
     "option_name_3":{
-        "message":"path matching"
+        "message":"Path Matching"
     },
     "el_selector":{
         "message":"The title source of the resource is captured by default, which is a CSS selector, and the Ins key is recommended for element selection"
@@ -27,37 +27,37 @@
         "message":"Matches resource urls. Only regular is supported"
     },
     "file_type_1":{
-        "message":"All resources"
+        "message":"All Resources"
     },
     "file_type_2":{
-        "message":"stylesheet"
+        "message":"StyleSheet"
     },
     "file_type_3":{
-        "message":"javsscript"
+        "message":"Javsscript"
     },
     "file_type_4":{
-        "message":"image"
+        "message":"Image"
     },
     "file_type_5":{
-        "message":"font file"
+        "message":"Font File"
     },
     "file_type_6":{
-        "message":"xhr"
+        "message":"Xhr"
     },
     "file_type_7":{
         "message":"Audio/Video"
     },
     "file_type_8":{
-        "message":"websocket"
+        "message":"Websocket"
     },
     "file_type_9":{
-        "message":"other"
+        "message":"Other"
     },
     "option_save":{
-        "message":"save"
+        "message":"Save"
     },
     "option_save_msg":{
-        "message":"Save success"
+        "message":"Save Success"
     },
     "file_type_none":{
         "message":"Unknown resources"
@@ -66,10 +66,10 @@
         "message":"Welcome to use"
     },
     "select_type":{
-        "message":"type："
+        "message":"Type:"
     },
     "select_type_btn":{
-        "message":"batch download"
+        "message":"Batch Download"
     },
     "save_all_message":{
         "message":"Please do not check chrome 'settings download content and ask for the save location of each file before downloading' to avoid multiple pop-up windows!"
