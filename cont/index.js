@@ -158,11 +158,12 @@ window.onmousemove = (e) => {
     if (config.choose === 0) {
         return;
     }
-    if (e.path.length > 4) {
+    
+    if (e.target) {
         $('.media-helper-choose').removeClass(config.choose_el);
-        $(e.path[0]).addClass(config.choose_el);
+        $(e.target).addClass(config.choose_el);
         
-        config.last_el_path = e.path;
+        config.last_el_path = e.target;
     }
 }
 
