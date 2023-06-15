@@ -73,5 +73,8 @@
     },
     "save_all_message":{
         "message":"请不要勾选 chrome `设置》下载内容》下载前询问每个文件的保存位置`，避免出现多个弹窗！"
+    },
+    "search_resures":{
+        "message":"手动搜索"
     }
 }

@@ -71,16 +71,22 @@ function load_list(first=false) {
     let type_s = $('#select_type').val();
     
     let s = '';
-    config.choose_list = [];
+    config.types = []
+    
     for (let i = 0; i < config.list.length; i++) {
         //文件列表
         if(config.list[i].media_type==type_s || type_s==='all' || type_s===null){
             config.choose_list.push(config.list[i])
+            let resource_type = `<i>${config.list[i].s_name}</i>`
+            if(config.list[i].media_type=='image'){
+                resource_type = `<img src="${config.list[i].url}"/>`
+            }
+            
             s += `
             <li>
-                <div class="info">
-                    <i>${config.list[i].s_name}</i>
-                    <div class="title">${(i+1)+'、'+config.list[i].title}</div>
+                <div class="info" title="${config.list[i].title}">
+                    ${resource_type}
+                    <div class="title">${config.list[i].title}</div>
                     <span class="btn btn-def" data-index="${i}" style="display:${config.list[i].media_type=='other' ? 'none' : 'inline'}">查看</span>
                     <span class="btn ${config.list[i].state ? 'btn-no' : 'btn-yes'}" data-index="${i}">${config.list[i].state ? '取消' : '下载'}</span>
                 </div>
@@ -92,13 +98,16 @@ function load_list(first=false) {
         //文件类型列表
         if(config.types.indexOf(config.list[i].media_type)<0){
             config.types.push(config.list[i].media_type)
+        }else{
+            console.log(config.list[i].media_type)
         }
+        
     }
     list_box.html(s);
-    if(first){
-        load_types();
-    }
-    
+    load_types();
+    //数量
+    let popup_title = chrome.i18n.getMessage("popup_title");
+    $('#popup_title').text(popup_title+`(${config.list.length})`);
     //播放事件
     $('#file-list>li span:nth-of-type(1)').click((e)=>{
         let index = $(e.target).data('index')
@@ -163,7 +172,7 @@ function load_types(){
     for (let i = 0; i < config.types.length; i++) {
         s += `<option value="${config.types[i]}">${config.types[i]}</option>`
     }
-
+    
     list_box.html(s);
 }
 
@@ -205,6 +214,10 @@ function media_play(index){
         $('#image-play').siblings().css('display','none')
     }
     
+}
+
+function search_resures(){
+    sendMessageToActive(null,'search')
 }
 
 /**
@@ -260,11 +273,14 @@ function open_tabs(url='') {
     let popup_title = chrome.i18n.getMessage("popup_title");
     $('#popup_title').text(popup_title);
     $('#select_type_text').text(chrome.i18n.getMessage("select_type"));
-    $('.contr .btn').text(chrome.i18n.getMessage("select_type_btn"));
+    $('.contr .save-all').text(chrome.i18n.getMessage("select_type_btn"));
+    $('.contr .search-resures').text(chrome.i18n.getMessage("search_resures"));
     //筛选
     $('#select_type').on('click',choose_types);
     //批量下载
-    $('.contr .btn').on('click',save_all);
+    $('.contr .save-all').on('click',save_all);
+
+    $('.contr .search-resures').on('click',search_resures);
     //加载列表
     sendMessageToActive(null,'get_list');
 }()

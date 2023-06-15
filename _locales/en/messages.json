@@ -73,5 +73,8 @@
     },
     "save_all_message":{
         "message":"Please do not check chrome 'settings download content and ask for the save location of each file before downloading' to avoid multiple pop-up windows!"
+    },
+    "search_resures":{
+        "message":"Search Resures"
     }
 }

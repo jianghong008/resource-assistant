@@ -5,7 +5,7 @@ html,body{
 }
 
 .warp {
-    width: 300px;
+    width: 360px;
     user-select: none;
 }
 
@@ -63,7 +63,11 @@ html,body{
     align-items: center;
     justify-content: space-between;
 }
-
+.info img{
+    width: 4em;
+    height: 4em;
+    margin-right: 0.5em;
+}
 .speed {
     position: absolute;
     left: 0;
@@ -108,6 +112,7 @@ html,body{
     padding: 0.2em;
     cursor: default;
     margin-right: 1em;
+    font-weight: bold;
 }
 
 .preview{
@@ -139,6 +144,7 @@ html,body{
 
 .contr{
     padding: 1em;
+    text-align: center;
 }
 
 #select_type{

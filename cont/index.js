@@ -12,18 +12,19 @@ const config = {
     last_el_path: [],
     list: [],
     version: '1.0',
-    active_el_border:'border: dashed 1px #e91e63',
-    path:"\.(mp3|mp4|wav|ogg|m4a|aac|mpeg|m3u8)",
-    file_type:'media'
+    active_el_border: 'border: dashed 1px #e91e63',
+    path: "\.(mp3|mp4|wav|ogg|m4a|aac|mpeg|m3u8)",
+    file_type: 'media',
+    search_list:[],
 };
 
 /**
  * 加载配置
  */
-cache_get(sys_conf,(res)=>{
-    if(res['sys_conf']){
-        for (let k in res['sys_conf']){
-            if(typeof res['sys_conf'][k] === 'string'){
+cache_get(sys_conf, (res) => {
+    if (res['sys_conf']) {
+        for (let k in res['sys_conf']) {
+            if (typeof res['sys_conf'][k] === 'string') {
                 config[k] = res['sys_conf'][k];
             }
 
@@ -37,7 +38,7 @@ cache_get(sys_conf,(res)=>{
  * @param {object} val 
  */
 function cache_set(key, val) {
-    if(!val){
+    if (!val) {
         return
     }
     const obj = {};
@@ -63,10 +64,14 @@ chrome.runtime.onMessage.addListener((m) => {
         case 'resource':
             //转发资源到列表
             set_list(m.data);
+            // search_resures()
             break;
         case 'get_list':
             //发生列表到弹出
             sendMessage(config.list, 'set_list')
+            break;
+        case 'search':
+            search_resures()
             break;
         default:
             console.log(m.data, m.cmd)
@@ -78,19 +83,21 @@ chrome.runtime.onMessage.addListener((m) => {
 function set_list(obj) {
     const data = { ...obj };
     let title = $(config.el_selector).text();
-    if(!title){
+    if (!title) {
         title = $('title').text();
     }
     //过滤特殊字符，并限制18个字符
-    title = title.replace(/[\.\:\s\<\>\\\[\]\^\`\`\'\"\;\*\$\@\~]/ig,'').substr(0,18);
+    title = title.replace(/[\.\:\s\<\>\\\[\]\^\`\`\'\"\;\*\$\@\~]/ig, '').substr(0, 18);
     //获取文件后缀
     let temp = data.url.match(/\.[\w]{1,6}\??$/);
-    if(!temp){
+    
+    if (!temp) {
         temp = data.url.match(/\.[\w]{1,6}\?/)
     }
     temp = temp && temp[0] ? temp[0] : '';
     
-    if(temp===''){
+    data['title'] = temp;
+    if (temp === '') {
         switch (data.data.type) {
             case "media":
                 temp = '.mp4';
@@ -117,8 +124,8 @@ function set_list(obj) {
     }
 
     let f_type = temp.replace('?', '');
-    data['title'] = title + f_type;
-    data['s_name'] = f_type.replace('.','');
+    data.title = data.url.replace(/.+\//,'')
+    data['s_name'] = f_type.replace('.', '');
     if (!data.url) {
         return
     }
@@ -126,20 +133,20 @@ function set_list(obj) {
         data.title = chrome.i18n.getMessage("file_type_none")
     }
     //媒体分类
-    if(/(mp3|m4a|ogg|wav)/.test(f_type)){
+    if (/(mp3|m4a|ogg|wav)/.test(f_type)) {
         //音频
         data['media_type'] = 'audio'
-    }else if(/(mp4|flv|avi|ts)/.test(f_type)){
+    } else if (/(mp4|flv|avi|ts)/.test(f_type)) {
         //视频
         data['media_type'] = 'video'
-    }else if(/(png|jpg|gif|ico|jpeg|svg)/.test(f_type)){
+    } else if (/(png|jpg|gif|ico|jpeg|svg)/.test(f_type)) {
         //图片
         data['media_type'] = 'image'
-    }else{
+    } else {
         //其它
         data['media_type'] = 'other'
     }
-    
+
     data.state = 0;
     data.speed = 0;
     //去重处理
@@ -149,7 +156,7 @@ function set_list(obj) {
             return;
         }
     }
-    
+
     config.list.push(data);
 }
 
@@ -158,11 +165,11 @@ window.onmousemove = (e) => {
     if (config.choose === 0) {
         return;
     }
-    
+
     if (e.target) {
         $('.media-helper-choose').removeClass(config.choose_el);
         $(e.target).addClass(config.choose_el);
-        
+
         config.last_el_path = e.target;
     }
 }
@@ -173,7 +180,7 @@ window.document.onkeyup = (e) => {
     if (e.keyCode !== 45) {
         return
     }
-    
+
     if (config.choose == 0) {
         config.choose = 1;
         return;
@@ -185,7 +192,7 @@ window.document.onkeyup = (e) => {
     }
     let selector = '';
     for (let i = ar.length - 4; i >= 0; i--) {
-        if(!ar[i]){
+        if (!ar[i]) {
             break
         }
         let id = ar[i].id;
@@ -216,10 +223,10 @@ window.document.onkeyup = (e) => {
     selector = selector.replace(config.choose_el, '');
     config.el_selector = selector;
 
-    const conf = {...config};
+    const conf = { ...config };
     delete conf['last_el_path'];
     delete conf['list'];
-    sendMessage(conf,'conf');
+    sendMessage(conf, 'conf');
 };
 
 /**
@@ -227,7 +234,7 @@ window.document.onkeyup = (e) => {
  * @param {object} data 
  * @param {string} cmd 
  */
- function sendMessage(data = {}, cmd = 'msg') {
+function sendMessage(data = {}, cmd = 'msg') {
     try {
         chrome.runtime.sendMessage({
             data,
@@ -238,19 +245,45 @@ window.document.onkeyup = (e) => {
     }
 }
 
+/**搜索资源*/
+function search_resures() {
+    const imgs = window.document.querySelectorAll('img')
+    for (let i = 0; i < imgs.length; i++) {
+        set_list({
+            type: 'image',
+            requestId: 'search',
+            url: imgs[i].src,
+            data: {}
+        })
+
+    }
+    const videos = window.document.querySelectorAll('video')
+    
+    for (let i = 0; i < videos.length; i++) {
+        set_list({
+            type: 'video',
+            requestId: 'search',
+            url: videos[i].src,
+            data: {}
+        })
+
+    }
+    sendMessage(config.list, 'set_list')
+}
+
 /**
  * 当窗口被激活时重新连接后台
  */
-window.document.addEventListener('visibilitychange',()=>{
-    if(window.document.hidden){
-        sendMessage(null,'keep')
+window.document.addEventListener('visibilitychange', () => {
+    if (window.document.hidden) {
+        sendMessage(null, 'keep')
     }
 })
 
 //初始化
 !function () {
-    sendMessage(null,'init');
-    console.log(chrome.i18n.getMessage("welcome")+'%c【'+chrome.i18n.getMessage("app_name")+'】！%cjianghong','color: #e91e63;font-weight: bold;','color:green;')
+    sendMessage(null, 'init');
+    console.log(chrome.i18n.getMessage("welcome") + '%c【' + chrome.i18n.getMessage("app_name") + '】！%cjianghong', 'color: #e91e63;font-weight: bold;', 'color:green;')
 }();
 
 
