@@ -129,8 +129,8 @@ function set_list(obj) {
     if (!data.url) {
         return
     }
-    if (!data.title) {
-        data.title = chrome.i18n.getMessage("file_type_none")
+    if (!data.s_name) {
+        data.s_name = chrome.i18n.getMessage("file_type_none")
     }
     //媒体分类
     if (/(mp3|m4a|ogg|wav)/.test(f_type)) {

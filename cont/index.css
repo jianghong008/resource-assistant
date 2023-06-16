@@ -1,5 +1,6 @@
 .media-helper-choose {
-    border: dashed 1px #e91e63;
+    /* border: dashed 1px #e91e63; */
+    outline: red solid 2px !important;
     box-sizing: border-box;
     /* position: relative; */
 }
