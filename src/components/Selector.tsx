@@ -13,7 +13,7 @@ export default function (props: Props) {
         <span>
             {props.value() || (props.all || '---')}
         </span>
-        <div class="selector-list absolute top-6 left-0 bg-slate-800 flex flex-col max-h-40 overflow-y-auto">
+        <div class="selector-list absolute z-[1000] top-6 left-0 bg-slate-800 flex flex-col max-h-40 overflow-y-auto">
             <For each={props.data}>
                 {
                     item => <button class="px-4 py-1 hover:bg-slate-500" onclick={() => props.setValue(item)}>

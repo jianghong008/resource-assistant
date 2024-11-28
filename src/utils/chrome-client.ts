@@ -38,8 +38,7 @@ export class ChromeClient {
     }
 
     async _getResources() {
-        const ar = BrowserUtils.getResources()
-        console.log(ar)
+        const ar = await BrowserUtils.getResources()
         ComUtils.callChromeMethod('setResources', ar).catch((err) => console.log(err))
     }
 }

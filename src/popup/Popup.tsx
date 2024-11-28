@@ -17,7 +17,7 @@ export default function () {
         "object", "stylesheet", "script", "image", "font", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
     ]
     const MatchTypes = ['network', 'document']
-    const [matchType, setMatchType] = createSignal<MatchType>('network')
+    const [matchType, setMatchType] = createSignal<MatchType>('document')
     const init = () => {
         //数据监听
         chrome.runtime.onMessage.addListener((m: ChromeMessage) => {
@@ -40,6 +40,9 @@ export default function () {
     const getIcon = (res: ResourceInfo) => {
         if (res.type === 'image' || res.type === 'canvas') {
             return res.url
+        } if (res.type === 'media') {
+            const isAudio = /.(mp3|wav|ogg|m4a|aac)/.test(res.url)
+            return ComUtils.getResourceUrl(`/files/ic-${isAudio ? 'audio' : 'video'}.svg`)
         } else {
             return ComUtils.getResourceUrl(`/files/ic-${res.type}.svg`)
         }
@@ -70,7 +73,7 @@ export default function () {
     return <div class='popup px-4 pb-4'>
         <div class=' sticky top-0 bg-[var(--bg-color)] py-4'>
             <h3 class=' text-xl font-bold mb-4'>
-                {ComUtils.getTranslateText("popup_title")}
+                {ComUtils.getTranslateText("app_name")}
             </h3>
             <div class='flex flex-wrap gap-4'>
                 <button onclick={() => setLayout('grid')}>

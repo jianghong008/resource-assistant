@@ -1,7 +1,8 @@
+import { ComUtils } from "./Com"
 import { StrUtils } from "./str"
 
 export namespace BrowserUtils {
-    export function getResources() {
+    export async function getResources() {
         const res: ResourceInfo[] = []
         //img
         const imgs = document.getElementsByTagName('img')
@@ -30,7 +31,7 @@ export namespace BrowserUtils {
         const video = document.getElementsByTagName('video')
         const videoRes: ResourceInfo[] = Array.from(video).map((item) => {
             return {
-                name: StrUtils.getNameFromUrl(item.src),
+                name: (item.src ? StrUtils.getNameFromUrl(item.src) : ComUtils.getTranslateText('inactive_video')),
                 url: item.src,
                 type: 'media',
                 size: 0
@@ -40,7 +41,7 @@ export namespace BrowserUtils {
 
         //canvas
         const canvas = document.getElementsByTagName('canvas')
-        const canvasRes: ResourceInfo[] = Array.from(canvas).map((item,index) => {
+        const canvasRes: ResourceInfo[] = Array.from(canvas).map((item, index) => {
             return {
                 name: 'canvas-' + index,
                 url: item.toDataURL('image/png'),

@@ -79,5 +79,8 @@
     },
     "search_resures":{
         "message":"手动搜索"
+    },
+    "inactive_video":{
+        "message":"请先播放/激活视频"
     }
 }
