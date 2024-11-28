@@ -87,15 +87,29 @@ export default function () {
         <Show when={getResourcesWithType().length == 0}>
             <div class='text-2xl text-center w-full text-slate-400 mt-6'>{ComUtils.getTranslateText("no_resource")}</div>
         </Show>
-        <div class={`${layout() === 'grid' ? 'grid grid-cols-4 gap-4' : 'flex flex-col'}`}>
-            <For each={getResourcesWithType()}>
-                {res => <button class={`${layout() === 'grid' ? '' : 'flex items-center gap-3'} p-2 hover:bg-slate-600`} title={res.name} onclick={() => setCurrentRes(res)}>
-                    <img class={`${layout() === 'grid' ? 'w-full aspect-square mb-3' : 'w-6 h-6'}`} src={getIcon(res)} alt={res.type} />
-                    <p class={`${layout() === 'grid' ? 'text-center' : 'text-left'} whitespace-nowrap overflow-hidden text-ellipsis`}>
-                        {res.name}
-                    </p>
-                </button>}
-            </For>
-        </div>
+        <Show when={layout() === 'grid'}>
+            <div class={`grid grid-cols-4 gap-4`}>
+                <For each={getResourcesWithType()}>
+                    {res => <button class={`p-2 hover:bg-slate-600`} title={res.name} onclick={() => setCurrentRes(res)}>
+                        <img class={`w-full aspect-square mb-3 object-cover`} src={getIcon(res)} alt={res.type} />
+                        <p class={`text-center whitespace-nowrap overflow-hidden text-ellipsis`}>
+                            {res.name}
+                        </p>
+                    </button>}
+                </For>
+            </div>
+        </Show>
+        <Show when={layout() === 'list'}>
+            <div class={`flex flex-col`}>
+                <For each={getResourcesWithType()}>
+                    {res => <button class={`flex items-center gap-3 p-2 hover:bg-slate-600 whitespace-nowrap overflow-hidden text-ellipsis`} title={res.name} onclick={() => setCurrentRes(res)}>
+                        <img class={`w-6 h-6 object-cover`} src={getIcon(res)} alt={res.type} />
+                        <p class={`text-left`}>
+                            {res.name}
+                        </p>
+                    </button>}
+                </For>
+            </div>
+        </Show>
     </div>
 }
