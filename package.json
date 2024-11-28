@@ -2,16 +2,13 @@
   "name": "media-download-assistant",
   "version": "1.0.0",
   "description": "Convenient resource capture tool",
-  "main": "bg.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "type": "module",
   "scripts": {
     "popup": "tsc -b && vite build -c=config/vite-popup.ts",
     "settings": "tsc -b && vite build -c=config/vite-st.ts",
     "content": "tsc -b && vite build -c=config/vite-content.ts",
     "bg": "tsc -b && vite build -c=config/vite-bg.ts",
-    "build": "npm run popup && npm run settings && npm run bg && npm run content && powershell ./scripts/pack.ps1"
+    "ext": "npm run popup && npm run settings && npm run bg && npm run content && powershell ./scripts/pack.ps1"
   },
   "repository": {
     "type": "git",
@@ -27,7 +24,10 @@
     "solid-js": "^1.9.3"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.287",
     "@types/node": "^22.9.3",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
     "vite": "^5.4.11",
     "vite-plugin-solid": "^2.10.2"

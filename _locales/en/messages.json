@@ -8,6 +8,9 @@
     "popup_title":{
         "message":"Resources"
     },
+    "no_resource":{
+        "message":"No Resources"
+    },
     "options_title":{
         "message":"Media Helper 【settings】"
     },

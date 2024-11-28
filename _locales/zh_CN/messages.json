@@ -8,6 +8,9 @@
     "popup_title":{
         "message":"资源列表"
     },
+    "no_resource":{
+        "message":"暂无资源"
+    },
     "options_title":{
         "message":"媒体下载助手 【设置】"
     },
