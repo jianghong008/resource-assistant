@@ -51,8 +51,12 @@ export class ChromeWorker {
                     if (has || details.type.includes('frame')) {
                         return { cancel: false };
                     }
+                    let type:ResourceInfoType = details.type;
+                    if(/\.(glb|gltf|obj|stl|ply|dae|fbx|glb|gltf|obj|stl|ply|dae)/.test(details.url)){
+                        type = '3dmodle'
+                    }
                     this.data.resources.push({
-                        type: details.type,
+                        type,
                         url: details.url,
                         name: StrUtils.getNameFromUrl(details.url),
                         size: Number(size?.value || 0)
@@ -118,6 +122,7 @@ export class ChromeWorker {
     }
 
     async _getResources() {
+        console.log(this.data.resources)
         return ChromeWorker.getChromeResponse(true, this.data.resources)
     }
 

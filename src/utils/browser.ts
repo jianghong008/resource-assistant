@@ -2,6 +2,13 @@ import { ComUtils } from "./Com"
 import { StrUtils } from "./str"
 
 export namespace BrowserUtils {
+    export function getUrlFromCanvas(canvas: HTMLCanvasElement) {
+        try {
+            return canvas.toDataURL('image/png')
+        } catch (error) {
+            return ''
+        }
+    }
     export async function getResources() {
         const res: ResourceInfo[] = []
         //img
@@ -44,7 +51,7 @@ export namespace BrowserUtils {
         const canvasRes: ResourceInfo[] = Array.from(canvas).map((item, index) => {
             return {
                 name: 'canvas-' + index,
-                url: item.toDataURL('image/png'),
+                url: BrowserUtils.getUrlFromCanvas(item),
                 type: 'canvas',
                 size: 0
             }
@@ -57,7 +64,7 @@ export namespace BrowserUtils {
             return {
                 name: StrUtils.getNameFromUrl(item.src),
                 url: item.src,
-                type: 'canvas',
+                type: 'media',
                 size: 0
             }
         })

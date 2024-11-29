@@ -12,9 +12,9 @@ export default function () {
     const [layout, setLayout] = createSignal<ResourceLayout>('grid')
     const [resourceType, setResourceType] = createSignal<ResourceInfoType>('image')
     const ResTypes = [
+        "image",
         '3dmodle',
-        'canvas',
-        "object", "stylesheet", "script", "image", "font", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "other"
+        'canvas', "stylesheet", "script",  "font", "xmlhttprequest", "media", "other"
     ]
     const MatchTypes = ['network', 'document']
     const [matchType, setMatchType] = createSignal<MatchType>('document')
@@ -85,7 +85,7 @@ export default function () {
                 <Selector value={matchType} setValue={setMatchAndLoad} data={MatchTypes} />
                 <Selector value={resourceType} setValue={setResourceType} data={ResTypes} />
             </div>
-            <Player data={currentRes} />
+            <Player data={currentRes} onclose={() => setCurrentRes(undefined)}/>
         </div>
         <Show when={getResourcesWithType().length == 0}>
             <div class='text-2xl text-center w-full text-slate-400 mt-6'>{ComUtils.getTranslateText("no_resource")}</div>
