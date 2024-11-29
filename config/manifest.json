@@ -5,9 +5,7 @@
   "manifest_version": 3,
   "homepage_url": "http://cmh.jhhaha.com",
   "permissions": [
-    "storage",
-    "scripting",
-    "contextMenus",
+    "clipboardWrite",
     "downloads",
     "webRequest",
     "tabs"

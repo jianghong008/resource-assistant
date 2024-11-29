@@ -1,9 +1,9 @@
 {
     "app_name":{
-        "message":"媒体下载助手"
+        "message":"资源下载助手"
     },
     "description":{
-        "message":"方便的资源捕获工具，按Ins键（退格键右边）进入元素选择模式，鼠标选中后再次Ins键取消模式，详细功能请到设置页面查看。"
+        "message":"一款更现代的资源捕获工具，支持文档搜索（包含画布），网络抓取。"
     },
     "popup_title":{
         "message":"资源列表"
@@ -12,7 +12,7 @@
         "message":"暂无资源"
     },
     "options_title":{
-        "message":"媒体下载助手 【设置】"
+        "message":"资源下载助手 【设置】"
     },
     "option_name_1":{
         "message":"捕获资源类型"

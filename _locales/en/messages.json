@@ -1,9 +1,9 @@
 {
     "app_name":{
-        "message":"Media Helper"
+        "message":"Resources Helper"
     },
     "description":{
-        "message":"Convenient resource capture tool, press the Ins key to enter the element selection mode, after the mouse is selected, press the Ins key again to cancel the mode, details please go to the Settings page to view."
+        "message":"A more modern resource capture tool that supports document search (including canvas), web crawling."
     },
     "popup_title":{
         "message":"Resources"
@@ -12,7 +12,7 @@
         "message":"No Resources"
     },
     "options_title":{
-        "message":"Media Helper 【settings】"
+        "message":"Resources Helper 【settings】"
     },
     "option_name_1":{
         "message":"Resource Type"

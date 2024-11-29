@@ -1,5 +1,5 @@
 import { ComUtils } from "@/utils/Com"
-import { Accessor, createEffect, createSignal, Match, Switch } from "solid-js"
+import { Accessor, createEffect, createSignal, Match, Show, Switch } from "solid-js"
 import ThreeDviewer from "./ThreeDviewer"
 
 interface Props {
@@ -7,8 +7,8 @@ interface Props {
     onclose?: () => void
 }
 const icClose = ComUtils.getResourceUrl('/popup/ic-close.svg')
-const copyClose = ComUtils.getResourceUrl('/popup/ic-copy.svg')
-const downloadClose = ComUtils.getResourceUrl('/popup/ic-download.svg')
+const copyIC = ComUtils.getResourceUrl('/popup/ic-copy.svg')
+const downloadIce = ComUtils.getResourceUrl('/popup/ic-download.svg')
 export default function (props: Props) {
     const [show, setShow] = createSignal(false)
     const isAudio = () => {
@@ -34,11 +34,15 @@ export default function (props: Props) {
     }
 
     const copyUrl = () => {
-
+        navigator.clipboard.writeText(props.data()?.url || '')
     }
 
     const download = () => {
-        
+        chrome.downloads.download({
+            url: props.data()?.url || '',
+            filename: props.data()?.name || '',
+            saveAs: true
+        });
     }
 
     const defaultView = <img class="w-full h-full object-contain" src={getIcon()} alt={getIcon()} />
@@ -47,31 +51,38 @@ export default function (props: Props) {
             setShow(true)
         }
     })
-    return <div class="relative w-2/3 mx-auto h-20 mt-4" style={{ display: show() ? 'block' : 'none' }}>
-        <div class="absolute -top-2 right-0 z-50">
+    return <div class="relative w-full h-24 mt-4" style={{ display: show() ? 'block' : 'none' }}>
+        <div class="absolute -top-2 right-0 z-50 flex flex-col gap-5">
             <button onclick={closePlayer}>
                 <img class="w-4 h-4" src={icClose} alt="close" />
             </button>
-            <button onclick={copyUrl}>
-                <img class="w-4 h-4" src={icClose} alt="close" />
-            </button>
-            <button onclick={download}>
-                <img class="w-4 h-4" src={icClose} alt="close" />
-            </button>
+            <Show when={props.data()?.url}>
+                <button onclick={copyUrl}>
+                    <img class="w-4 h-4" src={copyIC} alt="copyIC" />
+                </button>
+            </Show>
+
+            <Show when={props.data()?.url}>
+                <button onclick={download}>
+                    <img class="w-4 h-4" src={downloadIce} alt="downloadIce" />
+                </button>
+            </Show>
         </div>
-        <Switch fallback={defaultView}>
-            <Match when={props.data()?.type === 'image' || props.data()?.type === 'canvas'}>
-                <img class="w-full h-full object-contain" src={props.data()?.url} alt={props.data()?.name} />
-            </Match>
-            <Match when={props.data()?.type === 'media' && isAudio()}>
-                <audio class="w-full h-full" src={props.data()?.url} autoplay controls />
-            </Match>
-            <Match when={props.data()?.type === 'media' && !isAudio()}>
-                <video class="w-full h-full object-contain" src={props.data()?.url} autoplay muted controls />
-            </Match>
-            <Match when={props.data()?.type === '3dmodle'}>
-                <ThreeDviewer url={() => props.data()?.url} />
-            </Match>
-        </Switch>
+        <div class="w-2/3 h-full mx-auto">
+            <Switch fallback={defaultView}>
+                <Match when={props.data()?.type === 'image' || props.data()?.type === 'canvas'}>
+                    <img class="w-full h-full object-contain" src={props.data()?.url} alt={props.data()?.name} />
+                </Match>
+                <Match when={props.data()?.type === 'media' && isAudio()}>
+                    <audio class="w-full h-full" src={props.data()?.url} autoplay controls />
+                </Match>
+                <Match when={props.data()?.type === 'media' && !isAudio()}>
+                    <video class="w-full h-full object-contain" src={props.data()?.url} autoplay muted controls />
+                </Match>
+                <Match when={props.data()?.type === '3dmodle'}>
+                    <ThreeDviewer url={() => props.data()?.url} />
+                </Match>
+            </Switch>
+        </div>
     </div>
 }
