@@ -5,14 +5,13 @@ export namespace ComUtils {
 
     /**
    * 给当前激活窗口发送信息
-   * @param {object} data
-   * @param cmd
+   * @param {ChromeMessage} message
    */
     export function sendMessageForTabs(message: ChromeMessage) {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             tabs.forEach((tab) => {
                 if (tab.id) {
-                    chrome.tabs.sendMessage(tab.id, message)
+                    chrome.tabs.sendMessage(tab.id, message).catch(console.log)
                 }
             })
         })

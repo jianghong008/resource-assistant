@@ -1,6 +1,5 @@
 import { ComUtils } from "@/utils/Com"
 import { Accessor, createEffect, createSignal, Match, Show, Switch } from "solid-js"
-import ThreeDviewer from "./ThreeDviewer"
 
 interface Props {
     data: Accessor<ResourceInfo | undefined>
@@ -21,9 +20,11 @@ export default function (props: Props) {
         }
         if (res.type === 'image' || res.type === 'canvas') {
             return res.url
-        } if (res.type === 'media') {
+        }else if (res.type === 'media') {
             const isAudio = /.(mp3|wav|ogg|m4a|aac)/.test(res.url)
             return ComUtils.getResourceUrl(`/files/ic-${isAudio ? 'audio' : 'video'}.svg`)
+        }else if (res.type === 'xmlhttprequest') {
+            return ComUtils.getResourceUrl(`/files/ic-xmlhttprequest-${res.xhrMethod}.svg`)
         } else {
             return ComUtils.getResourceUrl(`/files/ic-${res.type}.svg`)
         }
@@ -53,17 +54,17 @@ export default function (props: Props) {
     })
     return <div class="relative w-full h-24 mt-4" style={{ display: show() ? 'block' : 'none' }}>
         <div class="absolute -top-2 right-0 z-50 flex flex-col gap-5">
-            <button onclick={closePlayer}>
+            <button onclick={closePlayer} title={ComUtils.getTranslateText("close")}>
                 <img class="w-4 h-4" src={icClose} alt="close" />
             </button>
             <Show when={props.data()?.url}>
-                <button onclick={copyUrl}>
+                <button onclick={copyUrl} title={ComUtils.getTranslateText("copy")}>
                     <img class="w-4 h-4" src={copyIC} alt="copyIC" />
                 </button>
             </Show>
 
             <Show when={props.data()?.url}>
-                <button onclick={download}>
+                <button onclick={download} title={ComUtils.getTranslateText("download")}>
                     <img class="w-4 h-4" src={downloadIce} alt="downloadIce" />
                 </button>
             </Show>
@@ -78,9 +79,6 @@ export default function (props: Props) {
                 </Match>
                 <Match when={props.data()?.type === 'media' && !isAudio()}>
                     <video class="w-full h-full object-contain" src={props.data()?.url} autoplay muted controls />
-                </Match>
-                <Match when={props.data()?.type === '3dmodle'}>
-                    <ThreeDviewer url={() => props.data()?.url} />
                 </Match>
             </Switch>
         </div>

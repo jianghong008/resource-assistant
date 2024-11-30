@@ -5,15 +5,7 @@ export class ChromeWorker {
     private data = {
         resources: Array<ResourceInfo>(),
     }
-    private config = {
-        active_tab: {},
-        auto_download: 0,
-        path: "\.(mp3|mp4|wav|ogg|m4a|aac|mpeg|m3u8)",
-        el_selector: '',
-        fileType: undefined as ResourceInfoType | undefined,
-        choose: 0,
-        version: '1.0'
-    };
+
     constructor() {
         this.initEvents()
     }
@@ -37,35 +29,29 @@ export class ChromeWorker {
             return true
         })
 
-        chrome.webRequest.onResponseStarted.addListener(
-            (details) => {
-                const reg = new RegExp(this.config.path, 'ig');
-                if (details.type === this.config.fileType || !this.config.fileType) {
-                    let temp = details.url.match(reg);
+        chrome.webRequest.onCompleted.addListener((details) => {
+            const size = details.responseHeaders?.find((item) => item.name === 'Content-Length');
+            const has = this.data.resources.find((item) => item.url === details.url);
 
-                    if (!temp && !this.config.path) {
-                        return { cancel: false };
-                    }
-                    const size = details.responseHeaders?.find((item) => item.name === 'Content-Length');
-                    const has = this.data.resources.find((item) => item.url === details.url);
-                    if (has || details.type.includes('frame')) {
-                        return { cancel: false };
-                    }
-                    let type:ResourceInfoType = details.type;
-                    if(/\.(glb|gltf|obj|stl|ply|dae|fbx|glb|gltf|obj|stl|ply|dae)/.test(details.url)){
-                        type = '3dmodle'
-                    }
-                    this.data.resources.push({
-                        type,
-                        url: details.url,
-                        name: StrUtils.getNameFromUrl(details.url),
-                        size: Number(size?.value || 0)
-                    })
+            if (!has && !details.type.includes('frame')) {
 
+                let type: ResourceInfoType = details.type;
+                if (/\.(glb|gltf|obj|stl|ply|dae|fbx|glb|gltf|obj|stl|ply|dae)/.test(details.url)) {
+                    type = '3dmodle'
                 }
-                return { cancel: false };
-            },
-            { urls: ['*://*/*'] }
+                this.data.resources.push({
+                    type,
+                    url: details.url,
+                    name: StrUtils.getNameFromUrl(details.url),
+                    size: Number(size?.value || 0),
+                    xhrMethod: details.method as any
+                })
+
+            }
+            return { cancel: false };
+        },
+            { urls: ['*://*/*'], },
+            ['responseHeaders']
         );
     }
 

@@ -5,6 +5,7 @@ interface ResourceInfo {
     url: string;
     type: ResourceInfoType;
     size: number;
+    xhrMethod?: 'GET' | 'POST' | 'PUT' | 'DELETE';
 }
 
 type MatchType = 'document' | 'network'

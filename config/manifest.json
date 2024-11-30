@@ -1,14 +1,13 @@
 {
   "name": "__MSG_app_name__",
   "description": "__MSG_description__",
-  "version": "1.0",
+  "version": "1.0.0",
   "manifest_version": 3,
   "homepage_url": "http://cmh.jhhaha.com",
   "permissions": [
     "clipboardWrite",
     "downloads",
-    "webRequest",
-    "tabs"
+    "webRequest"
   ],
   "default_locale":"en",
   "options_page": "settings/index.html",
@@ -18,8 +17,6 @@
   "action": {
     "default_popup": "popup/index.html",
     "default_icon": {
-      "16": "logo.png",
-      "32": "logo.png",
       "48": "logo.png",
       "128": "logo.png"
     }
@@ -31,15 +28,10 @@
       ],
       "js": [
         "content.js"
-      ],
-      "css": [
-        "style.css"
       ]
     }
   ],
   "icons": {
-    "16": "logo.png",
-    "32": "logo.png",
     "48": "logo.png",
     "128": "logo.png"
   },

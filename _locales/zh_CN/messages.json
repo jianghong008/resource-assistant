@@ -5,82 +5,55 @@
     "description":{
         "message":"一款更现代的资源捕获工具，支持文档搜索（包含画布），网络抓取。"
     },
-    "popup_title":{
-        "message":"资源列表"
-    },
     "no_resource":{
         "message":"暂无资源"
     },
-    "options_title":{
-        "message":"资源下载助手 【设置】"
+    "download":{
+        "message":"下载"
     },
-    "option_name_1":{
-        "message":"捕获资源类型"
+    "copy":{
+        "message":"复制"
     },
-    "option_name_2":{
-        "message":"资源标题"
+    "close":{
+        "message":"关闭"
     },
-    "option_name_3":{
-        "message":"路径匹配"
-    },
-    "el_selector":{
-        "message":"默认捕获资源的标题来源，此处应为css选择器，推荐使用Ins键进行元素选择"
-    },
-    "option_path":{
-        "message":"用于匹配资源URL，仅支持正则"
-    },
-    "file_type_1":{
-        "message":"全部资源"
-    },
-    "file_type_2":{
-        "message":"CSS样式表"
-    },
-    "file_type_3":{
-        "message":"JS脚本"
-    },
-    "file_type_4":{
-        "message":"图片"
-    },
-    "file_type_5":{
-        "message":"字体文件"
-    },
-    "file_type_6":{
-        "message":"xhr网络请求"
-    },
-    "file_type_7":{
-        "message":"音频/视频"
-    },
-    "file_type_8":{
-        "message":"websocket"
-    },
-    "file_type_9":{
-        "message":"其它"
-    },
-    "option_save":{
-        "message":"保 存"
-    },
-    "option_save_msg":{
-        "message":"保存成功"
-    },
-    "file_type_none":{
-        "message":"未知"
-    },
-    "welcome":{
-        "message":"欢迎使用"
-    },
-    "select_type":{
-        "message":"类型："
-    },
-    "select_type_btn":{
-        "message":"批量下载"
-    },
-    "save_all_message":{
-        "message":"请不要勾选 chrome `设置》下载内容》下载前询问每个文件的保存位置`，避免出现多个弹窗！"
-    },
-    "search_resures":{
-        "message":"手动搜索"
+    "keywords":{
+        "message":"关键词"
     },
     "inactive_video":{
         "message":"请先播放/激活视频"
+    },
+    "document":{
+        "message":"文档查找"
+    },
+    "network":{
+        "message":"网络抓取"
+    },
+    "image":{
+        "message":"图片"
+    },
+    "3dmodle":{
+        "message":"3D模型"
+    },
+    "canvas":{
+        "message":"画布"
+    },
+    "stylesheet":{
+        "message":"样式表"
+    },
+    "script":{
+        "message":"脚本"
+    },
+    "font":{
+        "message":"字体"
+    },
+    "xmlhttprequest":{
+        "message":"网络请求"
+    },
+    "media":{
+        "message":"媒体"
+    },
+    "other":{
+        "message":"其他"
     }
 }

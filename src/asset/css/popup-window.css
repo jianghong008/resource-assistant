@@ -1,16 +1,7 @@
-@media (prefers-color-scheme: light){
-    :root{
-        --bg-color: #fff;
-        --color: #202529;
-    }
-}
-
-@media (prefers-color-scheme: dark){
-    :root{
-        --bg-color: #202529;
-        --color: #fff;
-    } 
-}
+:root{
+    --bg-color: #202529;
+    --color: #fff;
+} 
 body{
     background-color: var(--bg-color);
     color: var(--color);
