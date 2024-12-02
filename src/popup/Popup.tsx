@@ -6,6 +6,10 @@ import { ComUtils } from '@/utils/Com'
 import Selector from '@/components/Selector'
 
 const logo = ComUtils.getResourceUrl('/logo.png')
+const selectorIco = ComUtils.getResourceUrl('/popup/ic-selector.svg')
+const selectorActiveIco = ComUtils.getResourceUrl('/popup/ic-selector-active.svg')
+const selectedIco = ComUtils.getResourceUrl('/popup/ic-selected.svg')
+const downloadIce = ComUtils.getResourceUrl('/popup/ic-download.svg')
 export default function () {
     const [currentRes, setCurrentRes] = createSignal<ResourceInfo>()
     const [resources, setResources] = createSignal<ResourceInfo[]>([])
@@ -21,6 +25,11 @@ export default function () {
     ]
     const MatchTypes = ['network', 'document']
     const [matchType, setMatchType] = createSignal<MatchType>('document')
+
+    const [selectorMode, setSelectorMode] = createSignal(false)
+    const [selectRes, setSelectRes] = createSignal<ResourceInfo[]>([])
+    const [progress, setProgress] = createSignal(0)
+
     const init = () => {
         //数据监听
         chrome.runtime.onMessage.addListener((m: ChromeMessage) => {
@@ -72,6 +81,20 @@ export default function () {
         }
     }
 
+    const setCurrentResource = (res: ResourceInfo) => {
+        if (!selectorMode()) {
+            setCurrentRes(res)
+            return
+        }
+        const ar = selectRes()
+        if (ar.some(item => item.url === res.url)) {
+            setSelectRes(ar.filter(item => item.url !== res.url))
+        } else {
+            setSelectRes([...ar, res])
+        }
+
+    }
+
     const setMatchAndLoad = (type: any) => {
         setMatchType(type)
         loadResource()
@@ -95,6 +118,27 @@ export default function () {
         setPage(0)
     }
 
+    const changeSelectMode = () => {
+        setSelectorMode(!selectorMode())
+        setCurrentRes(undefined)
+        if (!selectorMode()) {
+            setSelectRes([])
+        }
+    }
+
+    const hasSelected = (res: ResourceInfo) => {
+        return selectRes().some(item => item.url === res.url)
+    }
+
+    const downloadAll = async () => {
+        if (!selectRes().length) {
+            return
+        }
+        await ComUtils.downloadAll(selectRes(),setProgress)
+        setSelectRes([])
+        setProgress(0)
+    }
+
     createEffect(() => {
         if (resourceType() || matchType()) {
             setPage(0)
@@ -107,7 +151,7 @@ export default function () {
         loadResource()
     })
     return <div ref={box} class='popup px-4 pb-4'>
-        <div class=' sticky top-0 bg-[var(--bg-color)] py-4'>
+        <div class=' sticky top-0 z-50 bg-[var(--bg-color)] py-4'>
             <h3 class=' mb-4 flex items-center gap-1'>
                 <img class='w-6 h-6' src={logo} alt="logo" />
                 <span class=' text-xl font-bold'>
@@ -129,9 +173,21 @@ export default function () {
                 <button onclick={() => setLayout('list')}>
                     <img class='w-5 h-5' src={getLayoutIcon('list')} alt="list" />
                 </button>
-
+                <button onclick={changeSelectMode}>
+                    <Show when={selectorMode()} fallback={<img class='w-5 h-5' src={selectorIco} alt="selectorIco" />}>
+                        <img class='w-5 h-5' src={selectorActiveIco} alt="selectorActiveIco" />
+                    </Show>
+                </button>
+                <Show when={selectRes().length}>
+                    <button onclick={downloadAll} title={ComUtils.getTranslateText("download")}>
+                        <img class="w-5 h-5" src={downloadIce} alt="downloadIce" />
+                    </button>
+                </Show>
             </div>
             <Player data={currentRes} onclose={() => setCurrentRes(undefined)} />
+        </div>
+        <div class='w-full h-[0.05rem] bg-slate-700 mt-4' style={{ display: progress() > 0 ? 'block' : 'none' }}>
+            <div class=' h-full bg-[#2196F3]' style={{ width: progress() * 100 + '%' }}></div>
         </div>
         <Show when={getResourcesWithTypeForPage().length == 0}>
             <div class='text-2xl text-center w-full text-slate-400 mt-6'>{ComUtils.getTranslateText("no_resource")}</div>
@@ -139,11 +195,14 @@ export default function () {
         <Show when={layout() === 'grid'}>
             <div class={`grid grid-cols-4 gap-4`}>
                 <For each={getResourcesWithTypeForPage()}>
-                    {res => <button class={`p-2 hover:bg-slate-600`} title={res.name} onclick={() => setCurrentRes(res)}>
+                    {res => <button class={`relative p-2 hover:bg-slate-600`} title={res.name} onclick={() => setCurrentResource(res)}>
                         <img class={`w-full aspect-square mb-3 object-cover`} src={getIcon(res)} alt={res.type} />
                         <p class={`text-center whitespace-nowrap overflow-hidden text-ellipsis`}>
                             {res.name}
                         </p>
+                        <Show when={hasSelected(res)}>
+                            <img class={`w-4 h-4 object-cover absolute right-2 top-2`} src={selectedIco} alt='selectedIco' />
+                        </Show>
                     </button>}
                 </For>
             </div>
@@ -151,7 +210,7 @@ export default function () {
         <Show when={layout() === 'list'}>
             <div class={`flex flex-col`}>
                 <For each={getResourcesWithTypeForPage()}>
-                    {res => <button class={`w-full flex items-center gap-3 p-2 hover:bg-slate-600`} title={res.name} onclick={() => setCurrentRes(res)}>
+                    {res => <button class={`relative w-full flex items-center gap-3 p-2 hover:bg-slate-600`} title={res.name} onclick={() => setCurrentResource(res)}>
                         <img class={`w-6 h-6 object-cover`} src={getIcon(res)} alt={res.type} />
                         <span class='bg-[#2196F3] text-xs py-[0.1rem] px-1 rounded'>
                             {res.type}
@@ -159,6 +218,9 @@ export default function () {
                         <p class={`text-left whitespace-nowrap overflow-hidden text-ellipsis`}>
                             {res.name}
                         </p>
+                        <Show when={hasSelected(res)}>
+                            <img class={`w-4 h-4 object-cover absolute right-2 top-2`} src={selectedIco} alt='selectedIco' />
+                        </Show>
                     </button>}
                 </For>
             </div>

@@ -50,6 +50,8 @@ export default function (props: Props) {
     createEffect(() => {
         if (props.data()) {
             setShow(true)
+        }else{
+            setShow(false)
         }
     })
     return <div class="relative w-full h-24 mt-4" style={{ display: show() ? 'block' : 'none' }}>
