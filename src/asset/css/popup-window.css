@@ -1,0 +1,31 @@
+:root{
+    --bg-color: #202529;
+    --color: #fff;
+} 
+body{
+    background-color: var(--bg-color);
+    color: var(--color);
+}
+.popup{
+    width: 22rem;
+    height: 35rem;
+    position: relative;
+    overflow-y: auto;
+    color: white;
+}
+
+*::-webkit-scrollbar-track{
+    background-color: rgba(34, 37, 46, 1);
+}
+
+*::-webkit-scrollbar-thumb{
+    background-color: rgba(85, 97, 125, 1);
+    border-radius: 1rem;
+    width: 0.1rem;
+}
+
+*::-webkit-scrollbar{
+    width: 0.1rem;
+    height: 0.1rem;
+}
+

@@ -1,80 +1,59 @@
 {
-    "app_name":{
-        "message":"Media Helper"
+    "app_name": {
+        "message": "Resource Assistant"
     },
-    "description":{
-        "message":"Convenient resource capture tool, press the Ins key to enter the element selection mode, after the mouse is selected, press the Ins key again to cancel the mode, details please go to the Settings page to view."
+    "description": {
+        "message": "A more modern resource capture tool, supports document search (including canvas) and network scraping."
     },
-    "popup_title":{
-        "message":"Resources"
+    "no_resource": {
+        "message": "No resources available"
     },
-    "options_title":{
-        "message":"Media Helper 【settings】"
+    "download": {
+        "message": "Download"
     },
-    "option_name_1":{
-        "message":"Resource Type"
+    "copy": {
+        "message": "Copy"
     },
-    "option_name_2":{
-        "message":"Resource Title"
+    "close": {
+        "message": "Close"
     },
-    "option_name_3":{
-        "message":"Path Matching"
+    "keywords":{
+        "message":"keywords"
     },
-    "el_selector":{
-        "message":"The title source of the resource is captured by default, which is a CSS selector, and the Ins key is recommended for element selection"
+    "inactive_video": {
+        "message": "Please play/activate the video first"
     },
-    "option_path":{
-        "message":"Matches resource urls. Only regular is supported"
+    "document": {
+        "message": "Document Search"
     },
-    "file_type_1":{
-        "message":"All Resources"
+    "network": {
+        "message": "Network Scraping"
     },
-    "file_type_2":{
-        "message":"StyleSheet"
+    "image": {
+        "message": "Image"
     },
-    "file_type_3":{
-        "message":"Javsscript"
+    "3dmodle": {
+        "message": "3D Model"
     },
-    "file_type_4":{
-        "message":"Image"
+    "canvas": {
+        "message": "Canvas"
     },
-    "file_type_5":{
-        "message":"Font File"
+    "stylesheet": {
+        "message": "Stylesheet"
     },
-    "file_type_6":{
-        "message":"Xhr"
+    "script": {
+        "message": "Script"
     },
-    "file_type_7":{
-        "message":"Audio/Video"
+    "font": {
+        "message": "Font"
     },
-    "file_type_8":{
-        "message":"Websocket"
+    "xmlhttprequest": {
+        "message": "Network Request"
     },
-    "file_type_9":{
-        "message":"Other"
+    "media": {
+        "message": "Media"
     },
-    "option_save":{
-        "message":"Save"
-    },
-    "option_save_msg":{
-        "message":"Save Success"
-    },
-    "file_type_none":{
-        "message":"Unknown resources"
-    },
-    "welcome":{
-        "message":"Welcome to use"
-    },
-    "select_type":{
-        "message":"Type:"
-    },
-    "select_type_btn":{
-        "message":"Batch Download"
-    },
-    "save_all_message":{
-        "message":"Please do not check chrome 'settings download content and ask for the save location of each file before downloading' to avoid multiple pop-up windows!"
-    },
-    "search_resures":{
-        "message":"Search Resures"
+    "other": {
+        "message": "Other"
     }
 }

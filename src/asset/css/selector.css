@@ -1,0 +1,6 @@
+.selector .selector-list{
+    transform: scaleY(0);
+}
+.selector:hover .selector-list{
+    transform: scaleY(1);
+}
